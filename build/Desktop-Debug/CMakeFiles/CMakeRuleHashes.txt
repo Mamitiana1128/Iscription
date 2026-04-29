@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+0315006af0929ce4a8f0b1b23a500984 CMakeFiles/Inscription_autogen
+0315006af0929ce4a8f0b1b23a500984 CMakeFiles/Inscription_autogen_timestamp_deps
+a4ce45c60c1814ce68080bdda77a0004 Inscription_autogen/timestamp
