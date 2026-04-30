@@ -33,17 +33,22 @@ int Etudiant::getId() const
 //// Setter
 // -------------------------------------
 
-void Etudiant::setDateNaissance(QDate &date)
+void Etudiant::setDateNaissance(const QDate &date)
 {
     m_dateNaissance = date ;
 }
 
-void Etudiant::setName(QString &name)
+void Etudiant::setName(const QString &name)
 {
     m_name = name ;
 }
 
-void Etudiant::setSex(QString &sexe)
+void Etudiant::setSexe(const QString &sexe)
 {
     m_sexe = sexe ;
+}
+
+void Etudiant::setId(const int id)
+{
+    m_id = id ;
 }

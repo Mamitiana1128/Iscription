@@ -2,20 +2,39 @@
 
 using namespace std ;
 
-ListeEtudiant::ListeEtudiant() {}
-ListeEtudiant::~ListeEtudiant(){}
+ListeEtudiant::ListeEtudiant()
+{}
 
-void ListeEtudiant::ajout(QString &nom , QString &sexe , QDate &dateNaissance )
+ListeEtudiant::~ListeEtudiant()
+{}
+
+void ListeEtudiant::ajout(const QString &nom , const  QString &sexe , const QDate &dateNaissance , int id )
 {
-    Etudiant etudiantAAjouter ;
+    if(id == 0 )
+    {
+        Etudiant etudiantAAjouter ;
 
-    etudiantAAjouter.setName(nom);
-    etudiantAAjouter.setDateNaissance(dateNaissance);
-    etudiantAAjouter.setSex(sexe);
+        etudiantAAjouter.setName(nom);
+        etudiantAAjouter.setDateNaissance(dateNaissance);
+        etudiantAAjouter.setSexe(sexe);
 
-    // Ajout dans le liste
+        // Ajout dans le liste
         m_list.emplace_back(etudiantAAjouter) ;
+        m_nombreEtudiant++;
+    }
+    else
+    {
+        Etudiant etudiantAAjouter ;
 
+        etudiantAAjouter.setName(nom);
+        etudiantAAjouter.setDateNaissance(dateNaissance);
+        etudiantAAjouter.setSexe(sexe);
+        etudiantAAjouter.setId(id);
+
+        // Ajout dans le liste
+        m_list.emplace_back(etudiantAAjouter) ;
+        m_nombreEtudiant++;
+    }
 }
 
 vector<Etudiant>::iterator ListeEtudiant::rechercher(QString name)
@@ -59,6 +78,7 @@ bool ListeEtudiant::supprimer(int id )
     if(it != m_list.end() )
     {
         m_list.erase(it) ;
+        m_nombreEtudiant--;
 
         return (true) ;
     }
@@ -72,4 +92,20 @@ bool ListeEtudiant::supprimer(int id )
 vector<Etudiant> ListeEtudiant::getList()
 {
     return (m_list) ;
+}
+
+
+void ListeEtudiant::setNombreEtudiant(int nombre)
+{
+    m_nombreEtudiant = nombre ;
+}
+
+int ListeEtudiant::getNombreEtudiant()
+{
+    return (m_nombreEtudiant);
+}
+
+void ListeEtudiant::vider()
+{
+    m_list.clear() ;
 }

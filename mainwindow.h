@@ -2,14 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtWidgets>
 #include <QStandardItemModel>
 #include "ListeEtudiant.h"
-
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class MainWindow;
+    class MainWindow ;
 }
 QT_END_NAMESPACE
 
@@ -23,17 +24,25 @@ class MainWindow : public QMainWindow
 
         // getter
         QString getName();
-        QString getSEx();
+        QString getSExe();
         QDate getDateNaissance();
 
     private slots:
         void affichage() ;
-        void affichage(std::vector<Etudiant>::iterator it );
-        void ledChercherVide();
+        void affichage(const Etudiant& e);
+        void voirListeMenu(const QPoint &pos);
 
-        void on_btnChercher_clicked();
+        void Chercher(const QString &texte);
         void on_btnNettoyer_clicked();
         void on_btnAjouter_clicked();
+        void on_btnEffacer_clicked();
+        void on_btnToutSupprimer_clicked();
+
+        // Enregistrement et ouverture
+            void enregistrerCSV(const QString &fichier);
+            void ouvrirCSV(const QString &fichier);
+            void on_btnEnregistrer_clicked();
+            void on_btnOuvrir_clicked() ;
 
     private :
         Ui::MainWindow *ui;

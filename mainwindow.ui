@@ -75,8 +75,8 @@
              <property name="date">
               <date>
                <year>2026</year>
-               <month>1</month>
-               <day>1</day>
+               <month>6</month>
+               <day>11</day>
               </date>
              </property>
             </widget>
@@ -133,9 +133,9 @@ color: rgb(94, 92, 100);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="btnChercher">
+          <widget class="QPushButton" name="btnEffacer">
            <property name="text">
-            <string>Chercher</string>
+            <string>Effacer</string>
            </property>
           </widget>
          </item>
@@ -151,6 +151,23 @@ color: rgb(94, 92, 100);</string>
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="nombreDEtudiantLabel">
+           <property name="text">
+            <string>Nombre d'etudiant :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="ledNombreEtudiant">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Auccun</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -170,6 +187,31 @@ color: rgb(94, 92, 100);</string>
       </property>
      </widget>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="btnToutSupprimer">
+        <property name="text">
+         <string>Tout supprimer</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOuvrir">
+        <property name="text">
+         <string>Ouvrir</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEnregistrer">
+        <property name="text">
+         <string>Enregistrer</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -181,8 +223,56 @@ color: rgb(94, 92, 100);</string>
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionOuvrir_un_fichier"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnregister"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnregister_sous"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuModifier">
+    <property name="title">
+     <string>Modifier</string>
+    </property>
+   </widget>
+   <addaction name="menuFichier"/>
+   <addaction name="menuModifier"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOuvrir_un_fichier">
+   <property name="text">
+    <string>Ouvrir un fichier</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionEnregister">
+   <property name="text">
+    <string>Enregister</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionEnregister_sous">
+   <property name="text">
+    <string>Enregister sous</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionModification_pr_c_dente">
+   <property name="text">
+    <string>Modification précédente</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

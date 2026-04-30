@@ -11,6 +11,7 @@
 
 #include <QtCore/QDate>
 #include <QtCore/QVariant>
+#include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateEdit>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -34,6 +36,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionOuvrir_un_fichier;
+    QAction *actionEnregister;
+    QAction *actionEnregister_sous;
+    QAction *actionModification_pr_c_dente;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
@@ -53,10 +59,18 @@ public:
     QFormLayout *formLayout_2;
     QLabel *inputLabel;
     QLineEdit *ledChercher;
-    QPushButton *btnChercher;
+    QPushButton *btnEffacer;
     QSpacerItem *verticalSpacer;
+    QLabel *nombreDEtudiantLabel;
+    QLineEdit *ledNombreEtudiant;
     QTableView *tableView;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *btnToutSupprimer;
+    QPushButton *btnOuvrir;
+    QPushButton *btnEnregistrer;
     QMenuBar *menubar;
+    QMenu *menuFichier;
+    QMenu *menuModifier;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -64,6 +78,14 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(800, 600);
+        actionOuvrir_un_fichier = new QAction(MainWindow);
+        actionOuvrir_un_fichier->setObjectName("actionOuvrir_un_fichier");
+        actionEnregister = new QAction(MainWindow);
+        actionEnregister->setObjectName("actionEnregister");
+        actionEnregister_sous = new QAction(MainWindow);
+        actionEnregister_sous->setObjectName("actionEnregister_sous");
+        actionModification_pr_c_dente = new QAction(MainWindow);
+        actionModification_pr_c_dente->setObjectName("actionModification_pr_c_dente");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -106,7 +128,7 @@ public:
         dateDeNaissanceDateEdit = new QDateEdit(groupBox);
         dateDeNaissanceDateEdit->setObjectName("dateDeNaissanceDateEdit");
         dateDeNaissanceDateEdit->setCalendarPopup(true);
-        dateDeNaissanceDateEdit->setDate(QDate(2026, 1, 1));
+        dateDeNaissanceDateEdit->setDate(QDate(2026, 6, 11));
 
         formLayout->setWidget(2, QFormLayout::FieldRole, dateDeNaissanceDateEdit);
 
@@ -149,14 +171,25 @@ public:
 
         formLayout_2->setWidget(1, QFormLayout::FieldRole, ledChercher);
 
-        btnChercher = new QPushButton(groupBox_2);
-        btnChercher->setObjectName("btnChercher");
+        btnEffacer = new QPushButton(groupBox_2);
+        btnEffacer->setObjectName("btnEffacer");
 
-        formLayout_2->setWidget(2, QFormLayout::FieldRole, btnChercher);
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, btnEffacer);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         formLayout_2->setItem(3, QFormLayout::FieldRole, verticalSpacer);
+
+        nombreDEtudiantLabel = new QLabel(groupBox_2);
+        nombreDEtudiantLabel->setObjectName("nombreDEtudiantLabel");
+
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, nombreDEtudiantLabel);
+
+        ledNombreEtudiant = new QLineEdit(groupBox_2);
+        ledNombreEtudiant->setObjectName("ledNombreEtudiant");
+        ledNombreEtudiant->setReadOnly(true);
+
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, ledNombreEtudiant);
 
 
         horizontalLayout->addWidget(groupBox_2);
@@ -172,14 +205,48 @@ public:
 
         verticalLayout->addWidget(tableView);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        btnToutSupprimer = new QPushButton(centralwidget);
+        btnToutSupprimer->setObjectName("btnToutSupprimer");
+
+        horizontalLayout_3->addWidget(btnToutSupprimer);
+
+        btnOuvrir = new QPushButton(centralwidget);
+        btnOuvrir->setObjectName("btnOuvrir");
+
+        horizontalLayout_3->addWidget(btnOuvrir);
+
+        btnEnregistrer = new QPushButton(centralwidget);
+        btnEnregistrer->setObjectName("btnEnregistrer");
+
+        horizontalLayout_3->addWidget(btnEnregistrer);
+
+
+        verticalLayout->addLayout(horizontalLayout_3);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
         menubar->setGeometry(QRect(0, 0, 800, 23));
+        menuFichier = new QMenu(menubar);
+        menuFichier->setObjectName("menuFichier");
+        menuModifier = new QMenu(menubar);
+        menuModifier->setObjectName("menuModifier");
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
         MainWindow->setStatusBar(statusbar);
+
+        menubar->addAction(menuFichier->menuAction());
+        menubar->addAction(menuModifier->menuAction());
+        menuFichier->addSeparator();
+        menuFichier->addAction(actionOuvrir_un_fichier);
+        menuFichier->addSeparator();
+        menuFichier->addAction(actionEnregister);
+        menuFichier->addSeparator();
+        menuFichier->addAction(actionEnregister_sous);
+        menuFichier->addSeparator();
 
         retranslateUi(MainWindow);
 
@@ -189,12 +256,25 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        actionOuvrir_un_fichier->setText(QCoreApplication::translate("MainWindow", "Ouvrir un fichier", nullptr));
+#if QT_CONFIG(shortcut)
+        actionOuvrir_un_fichier->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+O", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionEnregister->setText(QCoreApplication::translate("MainWindow", "Enregister", nullptr));
+#if QT_CONFIG(shortcut)
+        actionEnregister->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+S", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionEnregister_sous->setText(QCoreApplication::translate("MainWindow", "Enregister sous", nullptr));
+#if QT_CONFIG(shortcut)
+        actionEnregister_sous->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Shift+S", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionModification_pr_c_dente->setText(QCoreApplication::translate("MainWindow", "Modification pr\303\251c\303\251dente", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "INSCRIPTION :", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Nom :", nullptr));
         ledName->setPlaceholderText(QCoreApplication::translate("MainWindow", "Nom", nullptr));
         sexeLabel->setText(QCoreApplication::translate("MainWindow", " Sexe :", nullptr));
         comboSexe->setItemText(0, QCoreApplication::translate("MainWindow", "Feminin", nullptr));
-        comboSexe->setItemText(1, QCoreApplication::translate("MainWindow", "Maculin", nullptr));
+        comboSexe->setItemText(1, QCoreApplication::translate("MainWindow", "Masculin", nullptr));
 
         dateDeNaissanceLabel->setText(QCoreApplication::translate("MainWindow", "Date de Naissance :", nullptr));
         btnNettoyer->setText(QCoreApplication::translate("MainWindow", "Nettoyer", nullptr));
@@ -202,7 +282,14 @@ public:
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Recherche :", nullptr));
         inputLabel->setText(QCoreApplication::translate("MainWindow", "Input :", nullptr));
         ledChercher->setPlaceholderText(QCoreApplication::translate("MainWindow", "chercher par Nom ou id", nullptr));
-        btnChercher->setText(QCoreApplication::translate("MainWindow", "Chercher", nullptr));
+        btnEffacer->setText(QCoreApplication::translate("MainWindow", "Effacer", nullptr));
+        nombreDEtudiantLabel->setText(QCoreApplication::translate("MainWindow", "Nombre d'etudiant :", nullptr));
+        ledNombreEtudiant->setPlaceholderText(QCoreApplication::translate("MainWindow", "Auccun", nullptr));
+        btnToutSupprimer->setText(QCoreApplication::translate("MainWindow", "Tout supprimer", nullptr));
+        btnOuvrir->setText(QCoreApplication::translate("MainWindow", "Ouvrir", nullptr));
+        btnEnregistrer->setText(QCoreApplication::translate("MainWindow", "Enregistrer", nullptr));
+        menuFichier->setTitle(QCoreApplication::translate("MainWindow", "Fichier", nullptr));
+        menuModifier->setTitle(QCoreApplication::translate("MainWindow", "Modifier", nullptr));
     } // retranslateUi
 
 };

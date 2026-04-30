@@ -11,9 +11,10 @@ class Etudiant
         ~Etudiant() ;
 
     // getter setter
-        void setName(QString &name);
-        void setSex(QString &sex);
-        void setDateNaissance(QDate &date) ;
+        void setName(const QString &name);
+        void setSexe(const QString &sex);
+        void setDateNaissance(const QDate &date) ;
+        void setId(const int id) ;
 
         QString getName() const ;
         QString getSExe()const ;
