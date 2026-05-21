@@ -1,4 +1,7 @@
 #include "ListeEtudiant.h"
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std ;
 
@@ -8,32 +11,40 @@ ListeEtudiant::ListeEtudiant()
 ListeEtudiant::~ListeEtudiant()
 {}
 
-void ListeEtudiant::ajout(const QString &nom , const  QString &sexe , const QDate &dateNaissance , int id )
+int ListeEtudiant::ajout(const QString &nom , const  QString &sexe , const QDate &dateNaissance , int id )
 {
+    int nouveauId ;
+    Etudiant etudiantAAjouter ;
+
     if(id == 0 )
     {
-        Etudiant etudiantAAjouter ;
+        nouveauId = genererId();
 
         etudiantAAjouter.setName(nom);
         etudiantAAjouter.setDateNaissance(dateNaissance);
         etudiantAAjouter.setSexe(sexe);
+        etudiantAAjouter.setId(nouveauId);
 
         // Ajout dans le liste
-        m_list.emplace_back(etudiantAAjouter) ;
-        m_nombreEtudiant++;
+            m_list.emplace_back(etudiantAAjouter) ;
+            m_nombreEtudiant++ ;
+            m_listId.emplace_back(nouveauId);
+
+            return (nouveauId) ;
     }
     else
     {
-        Etudiant etudiantAAjouter ;
-
         etudiantAAjouter.setName(nom);
         etudiantAAjouter.setDateNaissance(dateNaissance);
         etudiantAAjouter.setSexe(sexe);
         etudiantAAjouter.setId(id);
 
         // Ajout dans le liste
-        m_list.emplace_back(etudiantAAjouter) ;
-        m_nombreEtudiant++;
+            m_list.emplace_back(etudiantAAjouter) ;
+            m_nombreEtudiant++;
+            m_listId.emplace_back(id) ;
+
+            return id ;
     }
 }
 
@@ -72,13 +83,19 @@ vector<Etudiant>::iterator ListeEtudiant::rechercher(int id)
 bool ListeEtudiant::supprimer(int id )
 {
     vector<Etudiant>::iterator it ;
+    vector<int>::iterator itd ;
 
     it = rechercher( id ) ;
+    itd = find(m_listId.begin() , m_listId.end() , id ) ;
 
     if(it != m_list.end() )
     {
-        m_list.erase(it) ;
-        m_nombreEtudiant--;
+        // Suppresion de l'ID dans le liste
+            m_listId.erase(itd);
+
+        // Suppression de l'etudiant
+            m_list.erase(it) ;
+            m_nombreEtudiant-- ;
 
         return (true) ;
     }
@@ -89,7 +106,7 @@ bool ListeEtudiant::supprimer(int id )
 
 }
 
-vector<Etudiant> ListeEtudiant::getList()
+const vector<Etudiant>& ListeEtudiant::getList()
 {
     return (m_list) ;
 }
@@ -102,10 +119,48 @@ void ListeEtudiant::setNombreEtudiant(int nombre)
 
 int ListeEtudiant::getNombreEtudiant()
 {
-    return (m_nombreEtudiant);
+    return (m_nombreEtudiant) ;
 }
 
 void ListeEtudiant::vider()
 {
     m_list.clear() ;
+    m_listId.clear() ;
+}
+
+int ListeEtudiant::genererId()
+{
+    int id ;
+    vector<int>::iterator it ;
+
+    srand(time(0));
+    do
+    {
+
+        id = (rand() % 90000 ) + 10000 ; // Géneration Id de 5 chiffres
+
+        // Verification si Id existe déja
+            it = find(m_listId.begin() , m_listId.end() , id ) ;
+
+    }while(it != m_listId.end() );
+
+
+    return id ;
+}
+
+//---------------------------------------------------------
+// Modification d'un étudiant a partir de son id
+//---------------------------------------------------------
+void ListeEtudiant::modifier(int id , QString nouveauNom , QString nouveauxSexe , QDate nouveauDateNaissance )
+{
+    vector<Etudiant>::iterator it ;
+
+    it = rechercher(id) ;
+
+    if(it != m_list.end() )
+    {
+        it->setName(nouveauNom);
+        it->setSexe(nouveauxSexe);
+        it->setDateNaissance(nouveauDateNaissance);
+    }
 }

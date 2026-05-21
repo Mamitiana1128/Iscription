@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Historique.h"
 #include <QMainWindow>
-#include <QtWidgets>
 #include <QStandardItemModel>
 #include "ListeEtudiant.h"
 #include <QFile>
@@ -27,26 +27,53 @@ class MainWindow : public QMainWindow
         QString getSExe();
         QDate getDateNaissance();
 
+        // Methodes
+        void ajoutHistorique(QString typeAction , QString name , QString sexe , QDate date , int id ) ;
+        void ajoutRetourHistorique(QString typeAction , QString name , QString sexe , QDate date , int id ) ;
+
     private slots:
         void affichage() ;
         void affichage(const Etudiant& e);
-        void voirListeMenu(const QPoint &pos);
 
         void Chercher(const QString &texte);
-        void on_btnNettoyer_clicked();
-        void on_btnAjouter_clicked();
-        void on_btnEffacer_clicked();
-        void on_btnToutSupprimer_clicked();
+        void btnNettoyer_clicked();
+        void btnAjouter_clicked();
+        void btnToutSupprimer_clicked();
+
+        bool modifier(int id = 0 );
+
+        // Activation du button ajouter
+            void activerBtnAjouter();
+
+        // Pour le menu du tableView
+            void voirMenu(const QPoint &pos);
+
+        // pour le action retour et refaire
+            void retour() ;
+            void refaire() ;
+
+        // Quitter
+            void quitter() ;
+
+        // Barre de statues
+            void gestionStatues();
 
         // Enregistrement et ouverture
             void enregistrerCSV(const QString &fichier);
             void ouvrirCSV(const QString &fichier);
-            void on_btnEnregistrer_clicked();
-            void on_btnOuvrir_clicked() ;
+            void btnEnregistrer_clicked();
+            void enregistrerSous() ;
+            void btnOuvrir_clicked() ;
+
+    protected :
+
+        void closeEvent(QCloseEvent *event) override ;
 
     private :
         Ui::MainWindow *ui;
+        Historique m_historique ;
         ListeEtudiant m_list ;
         QStandardItemModel *model ;
+        bool enregister = true ;
 };
 #endif // MAINWINDOW_H

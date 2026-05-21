@@ -37,6 +37,9 @@
              <property name="placeholderText">
               <string>Nom</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="1" column="0">
@@ -130,19 +133,15 @@ color: rgb(94, 92, 100);</string>
            <property name="placeholderText">
             <string>chercher par Nom ou id</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="btnEffacer">
-           <property name="text">
-            <string>Effacer</string>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="2" column="1">
           <spacer name="verticalSpacer">
            <property name="orientation">
-            <enum>Qt::Vertical</enum>
+            <enum>Qt::Orientation::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -160,14 +159,27 @@ color: rgb(94, 92, 100);</string>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="ledNombreEtudiant">
-           <property name="readOnly">
-            <bool>true</bool>
+          <widget class="QLCDNumber" name="NombreEtudiant">
+           <property name="mouseTracking">
+            <bool>false</bool>
            </property>
-           <property name="placeholderText">
-            <string>Auccun</string>
+           <property name="segmentStyle">
+            <enum>QLCDNumber::SegmentStyle::Flat</enum>
            </property>
           </widget>
+         </item>
+         <item row="5" column="1">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -179,38 +191,22 @@ color: rgb(94, 92, 100);</string>
       <property name="cursor" stdset="0">
        <cursorShape>ArrowCursor</cursorShape>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+      </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+      </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
       </property>
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QPushButton" name="btnToutSupprimer">
-        <property name="text">
-         <string>Tout supprimer</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnOuvrir">
-        <property name="text">
-         <string>Ouvrir</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnEnregistrer">
-        <property name="text">
-         <string>Enregistrer</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QHBoxLayout" name="horizontalLayout_3"/>
     </item>
    </layout>
   </widget>
@@ -234,17 +230,44 @@ color: rgb(94, 92, 100);</string>
     <addaction name="separator"/>
     <addaction name="actionEnregister_sous"/>
     <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
    </widget>
    <widget class="QMenu" name="menuModifier">
     <property name="title">
      <string>Modifier</string>
     </property>
+    <addaction name="actionAnnuler_M"/>
+    <addaction name="actionRefaire"/>
+    <addaction name="actionMEtudiant"/>
+    <addaction name="actionTout_Effacer"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuModifier"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionQuitter"/>
+   <addaction name="actionOuvrir_un_fichier"/>
+   <addaction name="actionEnregister"/>
+   <addaction name="actionEnregister_sous"/>
+   <addaction name="actionAnnuler_M"/>
+   <addaction name="actionRefaire"/>
+   <addaction name="actionTout_Effacer"/>
+   <addaction name="actionMEtudiant"/>
+  </widget>
   <action name="actionOuvrir_un_fichier">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+   </property>
    <property name="text">
     <string>Ouvrir un fichier</string>
    </property>
@@ -253,6 +276,9 @@ color: rgb(94, 92, 100);</string>
    </property>
   </action>
   <action name="actionEnregister">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
+   </property>
    <property name="text">
     <string>Enregister</string>
    </property>
@@ -261,6 +287,9 @@ color: rgb(94, 92, 100);</string>
    </property>
   </action>
   <action name="actionEnregister_sous">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentSaveAs"/>
+   </property>
    <property name="text">
     <string>Enregister sous</string>
    </property>
@@ -268,9 +297,59 @@ color: rgb(94, 92, 100);</string>
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="actionModification_pr_c_dente">
+  <action name="actionAnnuler_M">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditUndo"/>
+   </property>
    <property name="text">
-    <string>Modification précédente</string>
+    <string>Annuler</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionRefaire">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditRedo"/>
+   </property>
+   <property name="text">
+    <string>Refaire</string>
+   </property>
+   <property name="toolTip">
+    <string>Refaire</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionMEtudiant">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::UserAvailable"/>
+   </property>
+   <property name="text">
+    <string>Modifier un Etudiant</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::ApplicationExit"/>
+   </property>
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionTout_Effacer">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::ListRemove"/>
+   </property>
+   <property name="text">
+    <string>Tout Effacer</string>
    </property>
   </action>
  </widget>

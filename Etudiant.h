@@ -7,6 +7,7 @@
 class Etudiant
 {
     public:
+
         Etudiant();
         ~Etudiant() ;
 
@@ -23,6 +24,7 @@ class Etudiant
 
 
     private :
+
         QString m_name ;
         QString m_sexe ;
         QDate m_dateNaissance ;

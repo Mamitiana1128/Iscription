@@ -9,13 +9,15 @@ class ListeEtudiant
         ListeEtudiant();
         ~ListeEtudiant();
 
-        std::vector<Etudiant> getList() ;
+        const std::vector<Etudiant>& getList() ;
         int getNombreEtudiant() ;
         void setNombreEtudiant(int nombre) ;
+        int genererId();
 
-        void ajout(const QString &nom , const QString &sexe , const QDate &dateNaissance , int id = 0 );
+        int ajout(const QString &nom , const QString &sexe , const QDate &dateNaissance , int id = 0 );
         bool supprimer(int id);
         void vider();
+        void modifier(int id , QString nouveauNom , QString nouveauxSexe , QDate nouveauDateNaissance ) ;
         std::vector<Etudiant>::iterator rechercher(QString name) ;
         std::vector<Etudiant>::iterator rechercher( int id) ;
 
@@ -23,7 +25,7 @@ class ListeEtudiant
 
         std::vector<Etudiant> m_list ;
         int m_nombreEtudiant = 0 ;
-
+        std::vector<int> m_listId ;
 };
 
 #endif // LISTEETUDIANT_H
