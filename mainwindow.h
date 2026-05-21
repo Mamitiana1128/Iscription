@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QLabel>
 #include "Historique.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
@@ -56,7 +57,8 @@ class MainWindow : public QMainWindow
             void quitter() ;
 
         // Barre de statues
-            void gestionStatues();
+            void creerStatues();
+            void updateStatus() ;
 
         // Enregistrement et ouverture
             void enregistrerCSV(const QString &fichier);
@@ -74,6 +76,11 @@ class MainWindow : public QMainWindow
         Historique m_historique ;
         ListeEtudiant m_list ;
         QStandardItemModel *model ;
+
+        QLabel *m_nombreEtudiant ;
+        QLabel *m_nombreGarcon ;
+        QLabel *m_nombreFille ;
+
         bool enregister = true ;
 };
 #endif // MAINWINDOW_H

@@ -63,10 +63,10 @@ bool Historique::annulerIsEmpty()
 //----------------------------------------------------------------------------
 bool Historique::refaireIsEmpty()
 {
-    if(m_refaire.empty())
+    if( m_refaire.empty() )
     {
         return (true) ;
     }
 
-    return (true) ;
+    return (false) ;
 }

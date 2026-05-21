@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
         ui->actionMEtudiant->setDisabled(true);
         ui->actionRefaire->setDisabled(true) ;
         ui->actionTout_Effacer->setDisabled(true) ;
+
+        creerStatues() ;
 }
 
 MainWindow::~MainWindow()
@@ -100,6 +102,8 @@ void MainWindow::affichage()
     }
 
     ui->NombreEtudiant->display( m_list.getNombreEtudiant() ) ;
+
+    updateStatus() ;
 }
 
 void MainWindow::Chercher(const QString &texte)
@@ -208,6 +212,9 @@ void MainWindow::enregistrerCSV(const QString &fichier)
         }
         file.close();
     }
+
+    ui->statusbar->showMessage("Sauvegarde Términé !" , 5000 ) ;
+    enregister = true ;
 }
 
 
@@ -275,7 +282,6 @@ void MainWindow::btnEnregistrer_clicked()
     if(!cheminFichier.isEmpty())
     {
         enregistrerCSV(cheminFichier);
-        enregister = true ;
     }
 }
 
@@ -288,7 +294,6 @@ void MainWindow::enregistrerSous()
     if(!cheminFichier.isEmpty())
     {
         enregistrerCSV(cheminFichier);
-        enregister = true ;
     }
 }
 
@@ -299,9 +304,10 @@ void MainWindow::btnOuvrir_clicked()
 
     if(!cheminFichier.isEmpty())
     {
-        ouvrirCSV(cheminFichier);
-        enregister = false ;
+        ouvrirCSV(cheminFichier) ;
     }
+
+    ui->statusbar->showMessage("Ouverture fichier !" , 5000 ) ;
 }
 
 void MainWindow::activerBtnAjouter()
@@ -391,33 +397,6 @@ bool MainWindow::modifier(int id )
 
     return false ;
 }
-
-//----------------------------------------------------------------------------
-/*
-void MainWindow::ajoutHistorique(QString typeAction , QString name , QString sexe , QDate date , int id )
-{
-    QString champ ;
-
-    champ = QString("%1;%2;%3;%4;%5").arg(typeAction , name , sexe , date.toString("dd/MM/yyyy") ,  QString::number(id)) ;
-
-    historique.push(champ) ;
-    ui->actionAnnuler_M->setEnabled(true) ;
-
-}
-
-//----------------------------------------------------------------------------
-
-void MainWindow::ajoutRetourHistorique(QString typeAction , QString name , QString sexe , QDate date , int id )
-{
-    QString champ ;
-
-    champ = QString("%1;%2;%3;%4;%5").arg(typeAction , name , sexe , date.toString("dd/MM/yyyy") ,  QString::number(id)) ;
-
-    retourHistorique.push(champ) ;
-    ui->actionRefaire->setEnabled(true) ;
-}
-*/
-//----------------------------------------------------------------------------
 
 void MainWindow::retour()
 {
@@ -523,7 +502,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QPushButton *save ;
     QPushButton *annuler ;
 
-    if(enregister)
+    if( enregister || ( cheminFichier.isEmpty() && m_list.getList().empty() ) )
     {
         event->accept();
         return ;
@@ -561,7 +540,31 @@ void MainWindow::quitter()
 }
 
 
-void MainWindow::gestionStatues()
+void MainWindow::creerStatues()
 {
+    m_nombreEtudiant = new QLabel("Nombre d'Etudiant : 0");
+    m_nombreFille = new QLabel("Feminin : 0") ;
+    m_nombreGarcon = new QLabel("Masculin : 0") ;
+
+    ui->statusbar->addPermanentWidget(m_nombreEtudiant ) ;
+    ui->statusbar->addPermanentWidget(m_nombreFille) ;
+    ui->statusbar->addPermanentWidget(m_nombreGarcon) ;
+}
+
+
+void MainWindow::updateStatus()
+{
+    int nombreT = 0 ;
+    int nombreF = 0 ;
+    int nombreM = 0 ;
+
+    // Recuperation des données utiles
+        nombreT = m_list.getNombreEtudiant() ;
+        nombreF = m_list.getNombreFeminin() ;
+        nombreM = m_list.getNombreMasculin() ;
+
+    m_nombreEtudiant->setText("Nombre d'Etudiant : " + QString::number(nombreT) ) ;
+    m_nombreFille->setText("Feminin : " + QString::number(nombreF)) ;
+    m_nombreGarcon->setText("Masculin : " + QString::number(nombreM)) ;
 
 }

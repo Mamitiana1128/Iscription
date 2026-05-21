@@ -12,6 +12,8 @@ class ListeEtudiant
         const std::vector<Etudiant>& getList() ;
         int getNombreEtudiant() ;
         void setNombreEtudiant(int nombre) ;
+        int getNombreFeminin() ;
+        int getNombreMasculin() ;
         int genererId();
 
         int ajout(const QString &nom , const QString &sexe , const QDate &dateNaissance , int id = 0 );
@@ -25,6 +27,8 @@ class ListeEtudiant
 
         std::vector<Etudiant> m_list ;
         int m_nombreEtudiant = 0 ;
+        int m_nombreFeminin = 0 ;
+        int m_nombreMasculin = 0 ;
         std::vector<int> m_listId ;
 };
 

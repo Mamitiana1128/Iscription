@@ -164,3 +164,35 @@ void ListeEtudiant::modifier(int id , QString nouveauNom , QString nouveauxSexe 
         it->setDateNaissance(nouveauDateNaissance);
     }
 }
+
+
+int ListeEtudiant::getNombreMasculin()
+{
+    int nombre = 0 ;
+
+    for(auto it = m_list.begin() ; it != m_list.end() ; ++it )
+    {
+        if(it->getSExe() == "Masculin")
+        {
+            nombre += 1 ;
+        }
+    }
+
+    return (nombre) ;
+}
+
+
+int ListeEtudiant::getNombreFeminin()
+{
+    int nombre = 0 ;
+
+    for(auto it = m_list.begin() ; it != m_list.end() ; it ++ )
+    {
+        if(it->getSExe() == "Feminin")
+        {
+            nombre += 1 ;
+        }
+    }
+
+    return (nombre) ;
+}
